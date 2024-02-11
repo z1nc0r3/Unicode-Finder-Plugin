@@ -33,18 +33,16 @@ class Shortener(FlowLauncher):
             )
             return output
 
-        with open("./assets/unicode_data.json", "r", encoding="utf-8") as f:
-            unicode_data = json.load(f)
-
         results = Shortener.fuzzy_search(query)
 
-        output.append(
-            {
-                "Title": f"Found {len(results)} unicode characters",
-                "SubTitle": "Click to copy",
-                "IcoPath": "Images/copy.png",
-            }
-        )
+        for i in results:
+            output.append(
+                {
+                    "Title": f"{i[0] + ' ⎯  ' + i[1]}",
+                    "SubTitle": f"{i[3] + ' (' + str(i[4]) + ')'}",
+                    "IcoPath": "Images/copy.png",
+                }
+            )
 
         """ output.append(
             {
