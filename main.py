@@ -28,21 +28,12 @@ class Unicoder(FlowLauncher):
             # running a fuzzy search with a limit of 40 results to avoid performance issues
             c.execute(
                 "SELECT * FROM characters WHERE name LIKE ? LIMIT ?",
-                ("%" + query + "%", 40),
+                ("%" + query + "%", 30),
             )
             return c.fetchall()
 
     def query(self, query):
         output = []
-
-        if not query:
-            output.append(
-                {
-                    "Title": "Enter a query to search unicode characters",
-                    "IcoPath": "Images/icon.png",
-                }
-            )
-            return output
 
         results = self.fuzzy_search(query)
 
