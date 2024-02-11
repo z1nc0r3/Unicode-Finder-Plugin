@@ -4,8 +4,8 @@
 # Date: 2024-02-11
 
 import sys, os
-import json
 import sqlite3
+from pathlib import Path
 
 parent_folder_path = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(parent_folder_path)
@@ -14,8 +14,9 @@ sys.path.append(os.path.join(parent_folder_path, "plugin"))
 
 from flowlauncher import FlowLauncher
 from rapidfuzz import process
-import requests
 import pyperclip
+
+ICON_FOLDER = Path(Path.cwd()) / "Images" / "icons"
 
 
 class Shortener(FlowLauncher):
@@ -33,7 +34,7 @@ class Shortener(FlowLauncher):
             )
             return output
 
-        results = Shortener.fuzzy_search(query)
+        results = self.fuzzy_search(query)
 
         for i in results:
             output.append(
@@ -55,10 +56,10 @@ class Shortener(FlowLauncher):
 
         return output
 
-    def fuzzy_search(query):
-        conn = sqlite3.connect('./assets/unicode_characters.db')
+    def fuzzy_search(self, query):
+        conn = sqlite3.connect("./assets/unicode_characters.db")
         c = conn.cursor()
-        c.execute("SELECT * FROM characters WHERE name LIKE ?", ('%' + query + '%',))
+        c.execute("SELECT * FROM characters WHERE name LIKE ?", ("%" + query + "%",))
         results = c.fetchall()
         conn.close()
         return results
