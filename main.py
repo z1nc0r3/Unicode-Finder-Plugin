@@ -16,19 +16,28 @@ from flowlauncher import FlowLauncher
 from rapidfuzz import process
 import pyperclip
 
-ICON_FOLDER = Path(Path.cwd()) / "Images" / "icons"
 
+class Unicoder(FlowLauncher):
+    DB_PATH = Path(__file__).parent / "assets" / "unicode_characters.db"
 
-class Shortener(FlowLauncher):
+    @staticmethod
+    def fuzzy_search(query):
+        with sqlite3.connect(Unicoder.DB_PATH) as conn:
+            conn.row_factory = sqlite3.Row
+            c = conn.cursor()
+            c.execute(
+                "SELECT * FROM characters WHERE name LIKE ? LIMIT ?",
+                ("%" + query + "%", 40),
+            )
+            return c.fetchall()
 
     def query(self, query):
         output = []
 
-        if query == "":
+        if not query:
             output.append(
                 {
                     "Title": "Enter a query to search unicode characters",
-                    "SubTitle": "Enter a query to search unicode characters",
                     "IcoPath": "Images/icon.png",
                 }
             )
@@ -42,31 +51,16 @@ class Shortener(FlowLauncher):
                     "Title": f"{i[0] + ' ⎯  ' + i[1]}",
                     "SubTitle": f"{i[3] + ' (' + str(i[4]) + ')'}",
                     "IcoPath": "Images/copy.png",
+                    "JsonRPCAction": {"method": "copy", "parameters": [i[0]]},
                 }
             )
 
-        """ output.append(
-            {
-                "Title": "Click to open in browser",
-                "SubTitle": f"{tiny}",
-                "IcoPath": "Images/open.png",
-                "JsonRPCAction": {"method": "open_url", "parameters": [f"{tiny}"]},
-            }
-        ) """
-
         return output
 
-    def fuzzy_search(self, query):
-        conn = sqlite3.connect("./assets/unicode_characters.db")
-        c = conn.cursor()
-        c.execute("SELECT * FROM characters WHERE name LIKE ?", ("%" + query + "%",))
-        results = c.fetchall()
-        conn.close()
-        return results
-
-    def copy(self, tiny):
-        pyperclip.copy(tiny)
+    @staticmethod
+    def copy(unicode):
+        pyperclip.copy(unicode)
 
 
 if __name__ == "__main__":
-    Shortener()
+    Unicoder()
