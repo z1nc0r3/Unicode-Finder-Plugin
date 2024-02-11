@@ -1,3 +1,29 @@
-# Unicode Finding plugin - Flow Launcher
+## Unicode Finder Plugin - Flow Launcher
+
+A Unicode searching plugin for [Flow Launcher](https://flowlauncher.com/) that allows you to search for Unicode characters and copy them to the clipboard. Inspired by the idea from this [discussion](https://github.com/Flow-Launcher/Flow.Launcher/discussions/2438) by [@haakonstorm](https://github.com/haakonstorm) and [alfred-search-unicode](https://github.com/blueset/alfred-search-unicode) repo. 
+
+
+
+### Features
+
+- Over 144000 characters to search from
+- Fast and efficient search
+- Copy to clipboard
+- Open source
+
+### Usage
+
+The following commands are available for the plugin.
+
+| Command                                                          | Description                   | Example                                                                                                                                                               |
+|------------------------------------------------------------------|-------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `` :: ``                                                          | Trigger the plugin       | `` :: `` to trigger the plugin                                                                                                                                 |
+| `` :: <Character Name> ``                     | Find Unicode                  | `` :: superscript one `` to find the Unicode character for Superscript one                              |
+| `` :: <Character Name> ``                     | Copy Unicode to clipboard                  |                               |
+
+
+#
+##### Disclaimer
+*This plugin is not related to the Unicode Consortium or the Unicode Standard. All Unicode data is sourced from the [Unicode Consortium](https://www.unicode.org/) including the Logo. We do not own any of the Unicode data or the logo.*
 
 
