@@ -25,7 +25,7 @@ class Unicoder(FlowLauncher):
         with sqlite3.connect(Unicoder.DB_PATH) as conn:
             conn.row_factory = sqlite3.Row
             c = conn.cursor()
-            # running a fuzzy search with a limit of 40 results to avoid performance issues
+            # running a fuzzy search with a limit of 30 results to avoid performance issues
             c.execute(
                 "SELECT * FROM characters WHERE name LIKE ? LIMIT ?",
                 ("%" + query + "%", 30),
